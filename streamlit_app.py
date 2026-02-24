@@ -12,7 +12,7 @@ st.write(
 )
 Quarter = st.number_input('Quarter',min_value=1,max_value=4) #Quarter
 col1, col2 = st.columns(2)
-TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=15) #Minutes Left in quarter
+TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=4) #Minutes Left in quarter
 TimeLeftSec = col2.number_input('Seconds Remaining in Quarter',min_value=0,max_value=59)  #Seconds Left in quarter
 col1, col2 = st.columns(2)
 TeamPoints = col1.number_input(':violet[Team Points]',min_value=0,max_value=150)  #Current team points
