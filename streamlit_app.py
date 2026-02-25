@@ -5,7 +5,7 @@ from scipy.stats import poisson
 
 st.title("Super Shot Decision Model")
 st.write(
-    "This app provides data based reccomendations on super shot stratergy."
+    "This app provides data based recommendations on super shot stratergy."
 )
 st.write(
     "Game Conditions:"
