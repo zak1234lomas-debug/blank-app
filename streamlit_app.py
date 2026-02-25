@@ -1,12 +1,38 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-from scipy.stats import poisson 
+from scipy.stats import poisson
 
+data = {
+    "Team":['Custom','Birmingham Panthers','Cardiff Dragons','Leeds Rhinos','London Mavs','London Pulse','Loughborough Lightning','Manchester Thunder','Nottingham Forest'],
+    "Points Per Possession (Normal Play)":[0,0.61,0.59,0.63,0.67,0.78,0.74,0.71,0.68],
+    "Points Per Possession (Supershot Play)":[0,1.34,1.23,1.33,1.48,1.57,1.6,1.51,1.56],
+    "Points Against Per Possession (Normal Play)":[0,0.71,0.73,0.66,0.7,0.59,0.64,0.66,0.68],
+    "Points Against Per Possession (Supershot Play)":[0,1.52,1.47,1.39,1.51,1.19,1.28,1.32,1.49],
+    "Attacking Possession Length":[1,27,29,26,28,21,30,26,24],
+    "Defending Possession Length":[1,24,22,27,25,32,30,29,23],
+    "Def Reb Attack length":[1,36,38,37,36,31,43,35,32],
+    "Def Reb Defend length":[1,33,33,39,38,46,45,38,31]
+}
+teamdata = pd.DataFrame(data)
 st.title("Super Shot Decision Model")
 st.write(
-    "This app provides data based recommendations on super shot strategy."
+    "This app provides data based recomendations on super shot strategy. *team stats are not accurate but just proof of concept"
 )
+
+col1, col2 = st.columns(2)
+team = col1.selectbox(
+    "Select a team",
+    (teamdata),
+)
+opp = col2.selectbox(
+    "Select an opposition",
+    (teamdata),
+)
+
+teamdf = teamdata[teamdata.Team == team]
+oppdf = teamdata[teamdata.Team == opp]
+
 st.write(
     "Game Conditions:"
 )
@@ -18,36 +44,74 @@ col1, col2 = st.columns(2)
 TeamPoints = col1.number_input(':violet[Team Points]',min_value=0,max_value=150)  #Current team points
 OppPoints = col2.number_input(':red[Opposition Points]',min_value=0,max_value=150)  #Current opposition points
 
-st.write(
-    ":violet[Team Attacking Metrics:]"
-)
-col1, col2 = st.columns(2)
-TeamPPPNorm = col1.number_input('Team Points Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Team Points per possesion in normal play
-TeamPPPSuper = col2.number_input('Team Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points per possesion in supershot play
+if team=="Custom":
+    st.write(
+        ":violet[Team Attacking Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    TeamPPPNorm = col1.number_input('Team Points Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Team Points per possesion in normal play
+    TeamPPPSuper = col2.number_input('Team Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points per possesion in supershot play
+
+    st.write(
+        ":violet[Team Defending Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    TeamDefPPPNorm = col1.number_input('Team Points Against Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Team Points agaimst per possesion in normal play
+    TeamDefPPPSuper = col2.number_input('Team Points Against Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points against per possesion in supershot play
+
+if team!="Custom":
+    TeamPPPNorm = teamdf.iloc[0]['Points Per Possession (Normal Play)']
+    TeamPPPSuper = teamdf.iloc[0]['Points Per Possession (Supershot Play)']
+    st.write(
+        ":violet[Team Attacking Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    col1.write(f"Teams normal points per possesion: {TeamPPPNorm}")
+    col2.write(f"Teams supershot points per possesion: :green[{TeamPPPSuper}]")
+    TeamDefPPPNorm = teamdf.iloc[0]['Points Against Per Possession (Normal Play)']
+    TeamDefPPPSuper = teamdf.iloc[0]['Points Against Per Possession (Supershot Play)']
+    st.write(
+        ":violet[Team Defending Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    col1.write(f"Teams normal points against per possesion: {TeamDefPPPNorm}")
+    col2.write(f"Teams supershot points against per possesion: :green[{TeamDefPPPSuper}]")
+
+if opp=="Custom":
+    st.write(
+        ":red[Opposition Attacking Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    OppPPPNorm = col1.number_input('Opp Points Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Opposition Points per possesion in normal play
+    OppPPPSuper = col2.number_input('Opp Points Per Possession :red[(Supershot Play)]',min_value=0.00,max_value=2.00) #Opposition Points per possesion in supershot play
+
+    st.write(
+        ":red[Opposition Defending Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    OppDefPPPNorm = col1.number_input('Opp Points Against Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Opposition Points against per possesion in normal play
+    OppDefPPPSuper = col2.number_input('Opp Points Against Per Possession :red[(Supershot Play)]',min_value=0.00,max_value=2.00) #Opposition Points against per possesion in supershot play
+
+if opp!="Custom":
+    OppPPPNorm = oppdf.iloc[0]['Points Per Possession (Normal Play)']
+    OppPPPSuper = oppdf.iloc[0]['Points Per Possession (Supershot Play)']
+    st.write(
+        ":red[Opp Attacking Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    col1.write(f"Opp normal points per possesion: {OppPPPNorm}")
+    col2.write(f"Opp supershot points per possesion: :red[{OppPPPSuper}]")
+    OppDefPPPNorm = oppdf.iloc[0]['Points Against Per Possession (Normal Play)']
+    OppDefPPPSuper = oppdf.iloc[0]['Points Against Per Possession (Supershot Play)']
+    st.write(
+        ":red[Opp Defending Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    col1.write(f"Opp normal points against per possesion: {OppDefPPPNorm}")
+    col2.write(f"Opp supershot points against per possesion: :red[{OppDefPPPSuper}]")
 
 st.write(
-    ":violet[Team Defending Metrics:]"
-)
-col1, col2 = st.columns(2)
-TeamDefPPPNorm = col1.number_input('Team Points Against Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Team Points agaimst per possesion in normal play
-TeamDefPPPSuper = col2.number_input('Team Points Against Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points against per possesion in supershot play
-
-st.write(
-    ":red[Opposition Attacking Metrics:]"
-)
-col1, col2 = st.columns(2)
-OppPPPNorm = col1.number_input('Opp Points Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Opposition Points per possesion in normal play
-OppPPPSuper = col2.number_input('Opp Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Opposition Points per possesion in supershot play
-
-st.write(
-    ":red[Opposition Defending Metrics:]"
-)
-col1, col2 = st.columns(2)
-OppDefPPPNorm = col1.number_input('Opp Points Against Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Opposition Points against per possesion in normal play
-OppDefPPPSuper = col2.number_input('Opp Points Against Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Opposition Points against per possesion in supershot play
-
-st.write(
-    ":violet[Pulse Shooting Metrics:]"
+    ":violet[Team Shooting Metrics:]"
 )
 col1, col2 = st.columns(2)
 GS1P = col1.number_input('Goal Shooter 1 Point %', min_value=0,max_value=100) #Goal Shooter 1 pointer %
@@ -58,15 +122,46 @@ GA2P = col2.number_input(':green[Goal Attack 2 Point %]', min_value=0,max_value=
 st.write(
     "Pace Metrics:"
 )
+
+if team=="Custom":
+    col1, col2 = st.columns(2)
+    AvgTeamPossLength = col1.number_input(':violet[Average Team Attacking Possession Length in Seconds]', min_value=1,max_value=100) #Average team possession length
+    AvgTeamPossAgainstLength = col2.number_input(':violet[Average Team Defending Possession Length in Seconds]', min_value=1,max_value=100) #Average team possession against length
+
+if team!="Custom":
+    AvgTeamPossLength = teamdf.iloc[0]['Attacking Possession Length']
+    AvgTeamPossAgainstLength = teamdf.iloc[0]['Defending Possession Length']
+    col1, col2 = st.columns(2)
+    col1.write(f"Team average attacking possession length: {AvgTeamPossLength}")
+    col2.write(f"Team average defensive possession length: {AvgTeamPossAgainstLength}")
+
+
+
+if opp=="Custom":
+    col1, col2 = st.columns(2)
+    AvgOppPossLength = col1.number_input(':red[Average Opp Attacking Possession Length in Seconds]', min_value=1,max_value=100) #Average opposition possession length
+    AvgOppPossAgainstLength = col2.number_input(':red[Average Opp Defending Possession Length in Seconds]', min_value=1,max_value=100) #Average opposition possession against length
+
+if opp!="Custom":
+    AvgOppPossLength = oppdf.iloc[0]['Attacking Possession Length']
+    AvgOppPossAgainstLength = oppdf.iloc[0]['Defending Possession Length']
+    col1, col2 = st.columns(2)
+    col1.write(f"Opp average attacking possession length: {AvgOppPossLength}")
+    col2.write(f"Opp average defensive possession length: {AvgOppPossAgainstLength}")
+
 col1, col2 = st.columns(2)
-AvgTeamPossLength = col1.number_input(':violet[Average Team Attacking Possession Length in Seconds]', min_value=1,max_value=100) #Average team possession length
-AvgTeamPossAgainstLength = col2.number_input(':violet[Average Team Defending Possession Length in Seconds]', min_value=1,max_value=100) #Average team possession against length
-col1, col2 = st.columns(2)
-AvgOppPossLength = col1.number_input(':red[Average Opp Attacking Possession Length in Seconds]', min_value=1,max_value=100) #Average opposition possession length
-AvgOppPossAgainstLength = col2.number_input(':red[Average Opp Defending Possession Length in Seconds]', min_value=1,max_value=100) #Average opposition possession against length
-col1, col2 = st.columns(2)
-AvgOppTOLength = col1.number_input(':violet[Average Team Defending TO Possession Length in Seconds]', min_value=1,max_value=100) #Average Opp turnover possession length
-AvgTeamTOAgainstLength = col2.number_input(':red[Average Opp Attacking TO Possession Length in Seconds]', min_value=1,max_value=100) #Average team turnover possession against length
+if team=="Custom":
+    AvgTeamTOAgainstLength = col1.number_input(':violet[Average team full defensive transition length in seconds]', min_value=1,max_value=100) #Average Opp turnover possession length
+if opp=="Custom":
+    AvgOppTOLength = col2.number_input(':red[Average opp full attacking transition length in seconds]', min_value=1,max_value=100) #Average team turnover possession against length
+
+if team!="Custom":
+    AvgTeamTOAgainstLength = oppdf.iloc[0]['Def Reb Defend length']
+    col1.write(f"Team average full defending transition length: {AvgTeamTOAgainstLength}")
+
+if opp!="Custom":
+    AvgOppTOLength = oppdf.iloc[0]['Def Reb Attack length']
+    col2.write(f"Opp average full attacking transition length: {AvgOppTOLength}")
 
 TimeLeft = (((4-Quarter)*15)*60)+(TimeLeftMin*60)+TimeLeftSec
 if TimeLeftMin >= 5:
