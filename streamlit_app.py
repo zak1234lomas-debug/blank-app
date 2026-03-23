@@ -314,5 +314,3 @@ col1, col2 = st.columns(2)
 col1.write(f'Win Probability with a made 1: {TeamWin1P.round(2)}%')
 col2.write(f'Win Probability with a made 2: {TeamWin2P.round(2)}%')
 st.write(f'Win Probability with a miss: {TeamWinMiss.round(2)}%')
-
-<div style="text-align: center"> f'Win Probability with a miss: {TeamWinMiss.round(2)}%' </div>
