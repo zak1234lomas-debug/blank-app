@@ -315,6 +315,6 @@ M2PWin = TeamWin2P*100
 MissWin = TeamWinMiss*100
 
 col1, col2 = st.columns(2)
-col1.write(f'Win Probability with a made 1: {TeamWin1P.round(2)}%')
-col2.write(f'Win Probability with a made 2: {TeamWin2P.round(2)}%')
-st.write(f'Win Probability with a miss: {TeamWinMiss.round(2)}%')
+col1.write(f'Win Probability with a made 1: {M1PWin.round(2)}%')
+col2.write(f'Win Probability with a made 2: {M2PWin.round(2)}%')
+st.write(f'Win Probability with a miss: {MissWin.round(2)}%')
