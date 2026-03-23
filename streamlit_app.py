@@ -5,12 +5,12 @@ from scipy.stats import poisson
 
 data = {
     "Team":['Custom','Birmingham Panthers','Cardiff Dragons','Leeds Rhinos','London Mavs','London Pulse','Loughborough Lightning','Manchester Thunder','Nottingham Forest'],
-    "Points Per Possession (Normal Play)":[0,0.61,0.59,0.63,0.67,0.78,0.74,0.71,0.68],
-    "Points Per Possession (Supershot Play)":[0,1.34,1.23,1.33,1.48,1.57,1.6,1.51,1.56],
-    "Points Against Per Possession (Normal Play)":[0,0.71,0.73,0.66,0.7,0.59,0.64,0.66,0.68],
-    "Points Against Per Possession (Supershot Play)":[0,1.52,1.47,1.39,1.51,1.19,1.28,1.32,1.49],
-    "Attacking Possession Length":[1,27,29,26,28,21,30,26,24],
-    "Defending Possession Length":[1,24,22,27,25,32,30,29,23],
+    "Points Per Possession (Normal Play)":[0,0.7,0.65,0.65,0.60,0.69,0.71,0.71,0.69],
+    "Points Per Possession (Supershot Play)":[0,0.89,0.75,0.86,0.87,1.05,1.11,1.00,0.94],
+    "Points Against Per Possession (Normal Play)":[0,0.74,0.68,0.68,0.67,0.62,0.68,0.63,0.63],
+    "Points Against Per Possession (Supershot Play)":[0,0.90,0.94,0.94,0.93,0.78,0.93,0.89,1.06],
+    "Attacking Possession Length":[1,26.57,28.53,27.92,28.66,26.23,28.31,27.72,26.23],
+    "Defending Possession Length":[1,28.04,27.47,27.67,27.01,28.57,27.30,27.26,26.84],
     "Def Reb Attack length":[1,36,38,37,36,31,43,35,32],
     "Def Reb Defend length":[1,33,33,39,38,46,45,38,31]
 }
