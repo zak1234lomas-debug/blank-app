@@ -294,13 +294,13 @@ GAOutcome = GA2PWin-GA1PWin
 if GSOutcome > 0:
     col1.write('**Goal Shooter should look for a :green[supershot]**')
 if GSOutcome < 0:
-    col1.write('**Goal Shooter should look for the easiest shot**')
+    col1.write('**Goal Shooter should look for the :red[easiest shot]**')
 if GSOutcome == 0:
     col1.write('**Goal Shooter has equal outcomes**')
 if GAOutcome > 0:
     col2.write('**Goal Attack should look for a :green[supershot]**')
 if GAOutcome < 0:
-    col2.write('**Goal Attack should look for the easiest shot**')
+    col2.write('**Goal Attack should look for the :red[easiest shot]**')
 if GAOutcome == 0:
     col2.write('**Goal Attack has equal outcomes**')
 
