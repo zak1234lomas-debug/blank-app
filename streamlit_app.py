@@ -17,7 +17,7 @@ data = {
 teamdata = pd.DataFrame(data)
 st.title("Super Shot Decision Model")
 st.write(
-    "This app provides data based recomendations on super shot strategy. *team stats are not accurate but just proof of concept"
+    "This app provides data based recomendations on super shot strategy"
 )
 
 col1, col2 = st.columns(2)
