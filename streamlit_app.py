@@ -149,7 +149,7 @@ if opp!="Custom":
     col1.write(f"Team Average Defensive Possession Length: {AvgTeamPossAgainstLength}")
     col2.write(f"Opp Average Defensive Possession Length: {AvgOppPossAgainstLength}")
 
-if mode="Supershot"
+if mode=="Supershot":
     col1, col2 = st.columns(2)
     if team=="Custom":
         AvgTeamTOAgainstLength = col1.number_input(':violet[Average Team Average Defending Transition Length in seconds]', min_value=1,max_value=100) #Average Opp turnover possession length
