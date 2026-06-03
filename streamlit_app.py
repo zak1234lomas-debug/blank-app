@@ -56,7 +56,7 @@ if team=="Custom":
     )
     col1, col2 = st.columns(2)
     TeamPPPNorm = col1.number_input('Team Points Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Team Points per possesion in normal play
-    OppPPPNorm = col2.number_input('Opposition Points Per Possession (Normal Play)min_value=0.00,max_value=2.00) #Team Points per possesion in supershot play
+    OppPPPNorm = col2.number_input('Opposition Points Per Possession (Normal Play)', min_value=0.00,max_value=2.00) #Team Points per possesion in supershot play
 
     st.write(
         ":violet[Supershot Attacking Metrics:]"
