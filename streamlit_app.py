@@ -328,5 +328,7 @@ if mode=="Supershot":
     st.write(f'Win Probability with a miss: {MissWin.round(2)}%')
 
 if mode=="Prediction":
-    st.write(TeamWinProb)
+    col1, col2 = st.columns(2)
+    col1.write(f'Team Win Probability: {TeamWinProb.round(2)}%')
+    col2.write(f'Opp Win Probability: {OppWinProb.round(2)}%')
     
