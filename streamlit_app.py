@@ -180,7 +180,7 @@ if TimeLeftMin >= 5:
 if TimeLeftMin < 5:
     TimeLeftNormal = (((4-Quarter)*10)*60)
 if TimeLeftMin >= 5:
-    TimeLeftSuper = (((4-Quarter)*5)*60)
+    TimeLeftSuper = (((5-Quarter)*5)*60)
 if TimeLeftMin < 5:
     TimeLeftSuper = (((4-Quarter)*5)*60)+((TimeLeftMin)*60)+TimeLeftSec
 
