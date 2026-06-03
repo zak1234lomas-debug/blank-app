@@ -52,69 +52,72 @@ OppPoints = col2.number_input(':red[Opposition Points]',min_value=0,max_value=10
 
 if team=="Custom":
     st.write(
-        ":violet[Team Attacking Metrics:]"
+        ":violet[Normal Attacking Metrics:]"
     )
     col1, col2 = st.columns(2)
     TeamPPPNorm = col1.number_input('Team Points Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Team Points per possesion in normal play
-    TeamPPPSuper = col2.number_input('Team Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points per possesion in supershot play
+    OppPPPNorm = col2.number_input('Opposition Points Per Possession (Normal Play)min_value=0.00,max_value=2.00) #Team Points per possesion in supershot play
 
     st.write(
-        ":violet[Team Defending Metrics:]"
+        ":violet[Supershot Attacking Metrics:]"
     )
     col1, col2 = st.columns(2)
-    TeamDefPPPNorm = col1.number_input('Team Points Against Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Team Points agaimst per possesion in normal play
-    TeamDefPPPSuper = col2.number_input('Team Points Against Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points against per possesion in supershot play
+    TeamPPPSuper = col1.number_input('Team Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=1.00) #Team Points agaimst per possesion in normal play
+    OppPPPNorm = col2.number_input('Opposition Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points against per possesion in supershot play
 
 if team!="Custom":
     TeamPPPNorm = teamdf.iloc[0]['Points Per Possession (Normal Play)']
     TeamPPPSuper = teamdf.iloc[0]['Points Per Possession (Supershot Play)']
+    OppPPPNorm = oppdf.iloc[0]['Points Against Per Possession (Normal Play)']
+    OppPPPSuper = oppdf.iloc[0]['Points Against Per Possession (Supershot Play)']
+    
     st.write(
-        ":violet[Team Attacking Metrics:]"
+        ":violet[Normal Attacking Metrics:]"
     )
     col1, col2 = st.columns(2)
-    col1.write(f"Teams normal points per possesion: {TeamPPPNorm}")
-    col2.write(f"Teams supershot points per possesion: :green[{TeamPPPSuper}]")
-    TeamDefPPPNorm = teamdf.iloc[0]['Points Against Per Possession (Normal Play)']
-    TeamDefPPPSuper = teamdf.iloc[0]['Points Against Per Possession (Supershot Play)']
+    col1.write(f"Team Normal Points Per Possesion: {TeamPPPNorm}")
+    col2.write(f"Opposition Normal Points Per Possesion: :green[{OppPPPNorm}]")
+
     st.write(
-        ":violet[Team Defending Metrics:]"
+        ":violet[Supershot Attacking Metrics:]"
     )
     col1, col2 = st.columns(2)
-    col1.write(f"Teams normal points against per possesion: {TeamDefPPPNorm}")
-    col2.write(f"Teams supershot points against per possesion: :green[{TeamDefPPPSuper}]")
+    col1.write(f"Team Supershot Points Per Possesion: {TeamPPPSuper}")
+    col2.write(f"Opposition Supershot Points Per Possesion: :green[{OppPPPSuper}]")
 
 if opp=="Custom":
     st.write(
-        ":red[Opposition Attacking Metrics:]"
+        ":red[Normal Defending Metrics:]"
     )
     col1, col2 = st.columns(2)
-    OppPPPNorm = col1.number_input('Opp Points Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Opposition Points per possesion in normal play
-    OppPPPSuper = col2.number_input('Opp Points Per Possession :red[(Supershot Play)]',min_value=0.00,max_value=2.00) #Opposition Points per possesion in supershot play
+    TeamDefPPPNorm = col1.number_input('Team Points Against Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Opposition Points per possesion in normal play
+    OppDefPPPNorm = col2.number_input('Opposition Points Against Per Possession (Normal Play)',min_value=0.00,max_value=2.00) #Opposition Points per possesion in supershot play
 
     st.write(
-        ":red[Opposition Defending Metrics:]"
+        ":red[Supershot Defending Metrics:]"
     )
     col1, col2 = st.columns(2)
-    OppDefPPPNorm = col1.number_input('Opp Points Against Per Possession (Normal Play)',min_value=0.00,max_value=1.00) #Opposition Points against per possesion in normal play
-    OppDefPPPSuper = col2.number_input('Opp Points Against Per Possession :red[(Supershot Play)]',min_value=0.00,max_value=2.00) #Opposition Points against per possesion in supershot play
+    TeamDefPPPSuper = col1.number_input('Team Points Against Per Possession :red[(Supershot Play)]',min_value=0.00,max_value=1.00) #Opposition Points against per possesion in normal play
+    OppDefPPPSuper = col2.number_input('Opposition Points Against Per Possession :red[(Supershot Play)]',min_value=0.00,max_value=2.00) #Opposition Points against per possesion in supershot play
 
 if opp!="Custom":
-    OppPPPNorm = oppdf.iloc[0]['Points Per Possession (Normal Play)']
-    OppPPPSuper = oppdf.iloc[0]['Points Per Possession (Supershot Play)']
-    st.write(
-        ":red[Opp Attacking Metrics:]"
-    )
-    col1, col2 = st.columns(2)
-    col1.write(f"Opp normal points per possesion: {OppPPPNorm}")
-    col2.write(f"Opp supershot points per possesion: :red[{OppPPPSuper}]")
+    TeamDefPPPNorm = teamdf.iloc[0]['Points Against Per Possession (Normal Play)']
+    TeamDefPPPSuper = teamdf.iloc[0]['Points Against Per Possession (Supershot Play)']
     OppDefPPPNorm = oppdf.iloc[0]['Points Against Per Possession (Normal Play)']
     OppDefPPPSuper = oppdf.iloc[0]['Points Against Per Possession (Supershot Play)']
     st.write(
-        ":red[Opp Defending Metrics:]"
+        ":red[Normal Defending Metrics:]"
     )
     col1, col2 = st.columns(2)
-    col1.write(f"Opp normal points against per possesion: {OppDefPPPNorm}")
-    col2.write(f"Opp supershot points against per possesion: :red[{OppDefPPPSuper}]")
+    col1.write(f"Team Normal Points Against Per Possesion: {TeamDefPPPNorm}")
+    col2.write(f"Opposition Normal Points Against Per Possesion: :red[{OppDefPPPNorm}]")
+
+    st.write(
+        ":red[Supershot Defending Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    col1.write(f"Team Supershot Points Against Per Possesion: {OppDefPPPNorm}")
+    col2.write(f"Opposition Supershot Points Against Per Possesion: :red[{OppDefPPPSuper}]")
 
 if mode=="Supershot":
     st.write(
@@ -338,6 +341,6 @@ if mode=="Prediction":
     if TeamWinProb > 50:
         colour = 'green'
     col1, col2 = st.columns(2)
-    col1.write(f'Team Win Probability: :colour{TeamWinProb.round(2)}%')
+    col1.write(f'Team Win Probability: {TeamWinProb.round(2)}%')
     col2.write(f'Opp Win Probability: {OppWinProb.round(2)}%')
     
