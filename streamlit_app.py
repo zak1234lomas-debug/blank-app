@@ -119,16 +119,6 @@ if opp!="Custom":
     col1.write(f"Team Supershot Points Against Per Possesion: {OppDefPPPNorm}")
     col2.write(f"Opposition Supershot Points Against Per Possesion: :red[{OppDefPPPSuper}]")
 
-if mode=="Supershot":
-    st.write(
-        ":violet[Team Shooting Metrics:]"
-    )
-    col1, col2 = st.columns(2)
-    GS1P = col1.number_input('Goal Shooter 1 Point %', min_value=0,max_value=100) #Goal Shooter 1 pointer %
-    GS2P = col1.number_input(':green[Goal Shooter 2 Point %]', min_value=0,max_value=100) #Goal Shooter 2 pointer %
-    GA1P = col2.number_input('Goal Attack 1 Point %', min_value=0,max_value=100) #Goal Attack 1 pointer %
-    GA2P = col2.number_input(':green[Goal Attack 2 Point %]', min_value=0,max_value=100) #Goal Attack 2 pointer %
-
 st.write(
     "Pace Metrics:"
 )
@@ -172,6 +162,16 @@ if team!="Custom":
 if opp!="Custom":
     AvgOppTOLength = oppdf.iloc[0]['Def Reb Attack length']
     col2.write(f"Opp average full attacking transition length: {AvgOppTOLength}")
+
+if mode=="Supershot":
+    st.write(
+        ":violet[Team Shooting Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    GS1P = col1.number_input('Goal Shooter 1 Point %', min_value=0,max_value=100) #Goal Shooter 1 pointer %
+    GS2P = col1.number_input(':green[Goal Shooter 2 Point %]', min_value=0,max_value=100) #Goal Shooter 2 pointer %
+    GA1P = col2.number_input('Goal Attack 1 Point %', min_value=0,max_value=100) #Goal Attack 1 pointer %
+    GA2P = col2.number_input(':green[Goal Attack 2 Point %]', min_value=0,max_value=100) #Goal Attack 2 pointer %
 
 TimeLeft = (((4-Quarter)*15)*60)+(TimeLeftMin*60)+TimeLeftSec
 if TimeLeftMin >= 5:
