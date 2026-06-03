@@ -41,10 +41,10 @@ st.write(
 Quarter = st.number_input('Quarter',min_value=1,max_value=4) #Quarter
 col1, col2 = st.columns(2)
 if mode == "Supershot":
-    TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=4) #Minutes Left in quarter
+    TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=5,value=5) #Minutes Left in quarter
     TimeLeftSec = col2.number_input('Seconds Remaining in Quarter',min_value=0,max_value=59)  #Seconds Left in quarter
 if mode == "Prediction":
-    TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=15) #Minutes Left in quarter
+    TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=15,value=15) #Minutes Left in quarter
     TimeLeftSec = col2.number_input('Seconds Remaining in Quarter',min_value=0,max_value=59)  #Seconds Left in quarter
 col1, col2 = st.columns(2)
 TeamPoints = col1.number_input(':violet[Team Points]',min_value=0,max_value=100)  #Current team points
@@ -331,6 +331,6 @@ if mode=="Supershot":
 
 if mode=="Prediction":
     col1, col2 = st.columns(2)
-    col1.write(f'Team Win Probability: {TeamWinProb.round(2)}%')
-    col2.write(f'Opp Win Probability: {OppWinProb.round(2)}%')
+    col1.write(f'Team Win Probability: {TeamWinProb*100.round(2)}%')
+    col2.write(f'Opp Win Probability: {OppWinProb*100.round(2)}%')
     
