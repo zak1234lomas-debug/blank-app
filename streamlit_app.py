@@ -126,7 +126,7 @@ st.write(
 if team=="Custom":
     col1, col2 = st.columns(2)
     AvgTeamPossLength = col1.number_input(':violet[Average Team Attacking Possession Length in Seconds]', min_value=1,max_value=100) #Average team possession length
-    AvgOppPossLength = col2.number_input(':violet[Average Opp Attacking Possession Length in Seconds]', min_value=1,max_value=100) #Average team possession against length
+    AvgOppPossLength = col2.number_input(':red[Average Opp Attacking Possession Length in Seconds]', min_value=1,max_value=100) #Average team possession against length
 
 if team!="Custom":
     AvgTeamPossLength = teamdf.iloc[0]['Attacking Possession Length']
@@ -139,7 +139,7 @@ if team!="Custom":
 
 if opp=="Custom":
     col1, col2 = st.columns(2)
-    AvgTeamPossAgainstLength = col1.number_input(':red[Average Team Defending Possession Length in Seconds]', min_value=1,max_value=100) #Average opposition possession length
+    AvgTeamPossAgainstLength = col1.number_input(':violet[Average Team Defending Possession Length in Seconds]', min_value=1,max_value=100) #Average opposition possession length
     AvgOppPossAgainstLength = col2.number_input(':red[Average Opp Defending Possession Length in Seconds]', min_value=1,max_value=100) #Average opposition possession against length
 
 if opp!="Custom":
@@ -149,19 +149,20 @@ if opp!="Custom":
     col1.write(f"Team Average Defensive Possession Length: {AvgTeamPossAgainstLength}")
     col2.write(f"Opp Average Defensive Possession Length: {AvgOppPossAgainstLength}")
 
-col1, col2 = st.columns(2)
-if team=="Custom":
-    AvgTeamTOAgainstLength = col1.number_input(':violet[Average team full defensive transition length in seconds]', min_value=1,max_value=100) #Average Opp turnover possession length
-if opp=="Custom":
-    AvgOppTOLength = col2.number_input(':red[Average opp full attacking transition length in seconds]', min_value=1,max_value=100) #Average team turnover possession against length
-
-if team!="Custom":
-    AvgTeamTOAgainstLength = oppdf.iloc[0]['Def Reb Defend length']
-    col1.write(f"Team average full defending transition length: {AvgTeamTOAgainstLength}")
-
-if opp!="Custom":
-    AvgOppTOLength = oppdf.iloc[0]['Def Reb Attack length']
-    col2.write(f"Opp average full attacking transition length: {AvgOppTOLength}")
+if mode="Supershot"
+    col1, col2 = st.columns(2)
+    if team=="Custom":
+        AvgTeamTOAgainstLength = col1.number_input(':violet[Average Team Average Defending Transition Length in seconds]', min_value=1,max_value=100) #Average Opp turnover possession length
+    if opp=="Custom":
+        AvgOppTOLength = col2.number_input(':red[Average Opp Average Attacking Transition Length in seconds]', min_value=1,max_value=100) #Average team turnover possession against length
+    
+    if team!="Custom":
+        AvgTeamTOAgainstLength = oppdf.iloc[0]['Def Reb Defend length']
+        col1.write(f"Team Average Defending Transition Length: {AvgTeamTOAgainstLength}")
+    
+    if opp!="Custom":
+        AvgOppTOLength = oppdf.iloc[0]['Def Reb Attack length']
+        col2.write(f"Opp Full Attacking Transition Length: {AvgOppTOLength}")
 
 if mode=="Supershot":
     st.write(
