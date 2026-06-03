@@ -63,7 +63,7 @@ if team=="Custom":
     )
     col1, col2 = st.columns(2)
     TeamPPPSuper = col1.number_input('Team Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points agaimst per possesion in normal play
-    OppPPPNorm = col2.number_input('Opp Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points against per possesion in supershot play
+    OppPPPSuper = col2.number_input('Opp Points Per Possession :green[(Supershot Play)]',min_value=0.00,max_value=2.00) #Team Points against per possesion in supershot play
 
 if team!="Custom":
     TeamPPPNorm = teamdf.iloc[0]['Points Per Possession (Normal Play)']
