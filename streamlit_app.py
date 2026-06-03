@@ -229,7 +229,7 @@ def netball_win_probabilities(GameTeamPPPNorm,GameTeamPPPSuper,GameOppPPPNorm,Ga
     
     return TeamWinProb, OppWinProb
 
-TeamWinProb,OppWinProb = netball_win_probabilities()
+TeamWinProb,OppWinProb = netball_win_probabilities(GameTeamPPPNorm,GameTeamPPPSuper,GameOppPPPNorm,GameOppPPPSuper,GameTeamPosLength,GameOppPosLength,TimeLeftNormal,TimeLeftSuper,TeamPoints,OppPoints)
 
 def apply_win_probs_2_made():
     TeamWinProb, OppWinProb = netball_win_probabilities(
