@@ -332,7 +332,12 @@ if mode=="Supershot":
 if mode=="Prediction":
     TeamWinProb=TeamWinProb*100
     OppWinProb=OppWinProb*100
+    st.write(
+    "Win Probabilities:"
+    )
+    if TeamWinProb > 50:
+        colour = 'green'
     col1, col2 = st.columns(2)
-    col1.write(f'Team Win Probability: {TeamWinProb.round(2)}%')
+    col1.write(f'Team Win Probability: :colour{TeamWinProb.round(2)}%')
     col2.write(f'Opp Win Probability: {OppWinProb.round(2)}%')
     
