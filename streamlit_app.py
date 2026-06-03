@@ -184,6 +184,10 @@ if TimeLeftMin >= 5:
 if TimeLeftMin < 5:
     TimeLeftSuper = (((4-Quarter)*5)*60)+((TimeLeftMin)*60)+TimeLeftSec
 
+col1, col2 = st.columns(2)
+col1.write(TimeLeftNormal)
+col2.write(TimeLeftSuper)
+
 GameTeamPosLength = (AvgTeamPossLength+AvgOppPossAgainstLength)/2 #Team adjusted team possession lenght
 GameTeamPPPNorm = (TeamPPPNorm+OppDefPPPNorm)/2 #Team adjusted points per possession in normal play
 GameTeamPPPSuper = (TeamPPPSuper+OppDefPPPSuper)/2 #Team adjusted points per possession in supershot play
