@@ -17,8 +17,10 @@ data = {
 teamdata = pd.DataFrame(data)
 st.title("Super Shot Decision Model")
 st.write(
-    "This app provides data based recomendations on super shot strategy"
+    "This app provides data based recomendations on super shot strategy or match outcome probabilities"
 )
+
+mode = st.selectbox("Select Mode",["Supershot","Prediction"])
 
 col1, col2 = st.columns(2)
 team = col1.selectbox(
@@ -38,11 +40,15 @@ st.write(
 )
 Quarter = st.number_input('Quarter',min_value=1,max_value=4) #Quarter
 col1, col2 = st.columns(2)
-TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=4) #Minutes Left in quarter
-TimeLeftSec = col2.number_input('Seconds Remaining in Quarter',min_value=0,max_value=59)  #Seconds Left in quarter
+if mode == "Supershot":
+    TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=4) #Minutes Left in quarter
+    TimeLeftSec = col2.number_input('Seconds Remaining in Quarter',min_value=0,max_value=59)  #Seconds Left in quarter
+if mode == "Prediction":
+    TimeLeftMin = col1.number_input('Minutes Remaining in Quarter',min_value=0,max_value=15) #Minutes Left in quarter
+    TimeLeftSec = col2.number_input('Seconds Remaining in Quarter',min_value=0,max_value=59)  #Seconds Left in quarter
 col1, col2 = st.columns(2)
-TeamPoints = col1.number_input(':violet[Team Points]',min_value=0,max_value=150)  #Current team points
-OppPoints = col2.number_input(':red[Opposition Points]',min_value=0,max_value=150)  #Current opposition points
+TeamPoints = col1.number_input(':violet[Team Points]',min_value=0,max_value=100)  #Current team points
+OppPoints = col2.number_input(':red[Opposition Points]',min_value=0,max_value=100)  #Current opposition points
 
 if team=="Custom":
     st.write(
@@ -110,14 +116,15 @@ if opp!="Custom":
     col1.write(f"Opp normal points against per possesion: {OppDefPPPNorm}")
     col2.write(f"Opp supershot points against per possesion: :red[{OppDefPPPSuper}]")
 
-st.write(
-    ":violet[Team Shooting Metrics:]"
-)
-col1, col2 = st.columns(2)
-GS1P = col1.number_input('Goal Shooter 1 Point %', min_value=0,max_value=100) #Goal Shooter 1 pointer %
-GS2P = col1.number_input(':green[Goal Shooter 2 Point %]', min_value=0,max_value=100) #Goal Shooter 2 pointer %
-GA1P = col2.number_input('Goal Attack 1 Point %', min_value=0,max_value=100) #Goal Attack 1 pointer %
-GA2P = col2.number_input(':green[Goal Attack 2 Point %]', min_value=0,max_value=100) #Goal Attack 2 pointer %
+if mode=="Supershot":
+    st.write(
+        ":violet[Team Shooting Metrics:]"
+    )
+    col1, col2 = st.columns(2)
+    GS1P = col1.number_input('Goal Shooter 1 Point %', min_value=0,max_value=100) #Goal Shooter 1 pointer %
+    GS2P = col1.number_input(':green[Goal Shooter 2 Point %]', min_value=0,max_value=100) #Goal Shooter 2 pointer %
+    GA1P = col2.number_input('Goal Attack 1 Point %', min_value=0,max_value=100) #Goal Attack 1 pointer %
+    GA2P = col2.number_input(':green[Goal Attack 2 Point %]', min_value=0,max_value=100) #Goal Attack 2 pointer %
 
 st.write(
     "Pace Metrics:"
@@ -283,38 +290,43 @@ def apply_win_probs_miss():
     
 TeamWinMiss,OppWinMiss = apply_win_probs_miss()
 
-GS2PWin = ((GS2P*TeamWin2P)+((100-GS2P)*TeamWinMiss))
-GS1PWin = ((GS1P*TeamWin1P)+((100-GS1P)*TeamWinMiss))
-GA2PWin = ((GA2P*TeamWin2P)+((100-GA2P)*TeamWinMiss))
-GA1PWin = ((GA1P*TeamWin1P)+((100-GA1P)*TeamWinMiss))
+if mode=="Supershot":
+    GS2PWin = ((GS2P*TeamWin2P)+((100-GS2P)*TeamWinMiss))
+    GS1PWin = ((GS1P*TeamWin1P)+((100-GS1P)*TeamWinMiss))
+    GA2PWin = ((GA2P*TeamWin2P)+((100-GA2P)*TeamWinMiss))
+    GA1PWin = ((GA1P*TeamWin1P)+((100-GA1P)*TeamWinMiss))
+    
+    col1, col2 = st.columns(2)
+    GSOutcome = GS2PWin-GS1PWin
+    GAOutcome = GA2PWin-GA1PWin
+    if GSOutcome > 0:
+        col1.write('**Goal Shooter should look for a :green[supershot]**')
+    if GSOutcome < 0:
+        col1.write('**Goal Shooter should look for the :red[easiest shot]**')
+    if GSOutcome == 0:
+        col1.write('**Goal Shooter has equal outcomes**')
+    if GAOutcome > 0:
+        col2.write('**Goal Attack should look for a :green[supershot]**')
+    if GAOutcome < 0:
+        col2.write('**Goal Attack should look for the :red[easiest shot]**')
+    if GAOutcome == 0:
+        col2.write('**Goal Attack has equal outcomes**')
+    
+    col1, col2 = st.columns(2)
+    col1.write(f'Win Probability with GS 2: {GS2PWin.round(2)}%')
+    col1.write(f'Win Probability with GS 1: {GS1PWin.round(2)}%')
+    col2.write(f'Win Probability with GA 2: {GA2PWin.round(2)}%')
+    col2.write(f'Win Probability with GA 1: {GA1PWin.round(2)}%')
+    
+    M1PWin = TeamWin1P*100
+    M2PWin = TeamWin2P*100
+    MissWin = TeamWinMiss*100
+    
+    col1, col2 = st.columns(2)
+    col1.write(f'Win Probability with a made 1: {M1PWin.round(2)}%')
+    col2.write(f'Win Probability with a made 2: {M2PWin.round(2)}%')
+    st.write(f'Win Probability with a miss: {MissWin.round(2)}%')
 
-col1, col2 = st.columns(2)
-GSOutcome = GS2PWin-GS1PWin
-GAOutcome = GA2PWin-GA1PWin
-if GSOutcome > 0:
-    col1.write('**Goal Shooter should look for a :green[supershot]**')
-if GSOutcome < 0:
-    col1.write('**Goal Shooter should look for the :red[easiest shot]**')
-if GSOutcome == 0:
-    col1.write('**Goal Shooter has equal outcomes**')
-if GAOutcome > 0:
-    col2.write('**Goal Attack should look for a :green[supershot]**')
-if GAOutcome < 0:
-    col2.write('**Goal Attack should look for the :red[easiest shot]**')
-if GAOutcome == 0:
-    col2.write('**Goal Attack has equal outcomes**')
-
-col1, col2 = st.columns(2)
-col1.write(f'Win Probability with GS 2: {GS2PWin.round(2)}%')
-col1.write(f'Win Probability with GS 1: {GS1PWin.round(2)}%')
-col2.write(f'Win Probability with GA 2: {GA2PWin.round(2)}%')
-col2.write(f'Win Probability with GA 1: {GA1PWin.round(2)}%')
-
-M1PWin = TeamWin1P*100
-M2PWin = TeamWin2P*100
-MissWin = TeamWinMiss*100
-
-col1, col2 = st.columns(2)
-col1.write(f'Win Probability with a made 1: {M1PWin.round(2)}%')
-col2.write(f'Win Probability with a made 2: {M2PWin.round(2)}%')
-st.write(f'Win Probability with a miss: {MissWin.round(2)}%')
+if mode=="Prediction":
+    st.write(TeamWinProb)
+    
