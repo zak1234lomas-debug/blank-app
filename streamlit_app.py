@@ -235,68 +235,68 @@ def netball_win_probabilities(GameTeamPPPNorm,GameTeamPPPSuper,GameOppPPPNorm,Ga
 
 TeamWinProb,OppWinProb = netball_win_probabilities(GameTeamPPPNorm,GameTeamPPPSuper,GameOppPPPNorm,GameOppPPPSuper,GameTeamPosLength,GameOppPosLength,TimeLeftNormal,TimeLeftSuper,TeamPoints,OppPoints)
 
-def apply_win_probs_2_made():
-    TeamWinProb, OppWinProb = netball_win_probabilities(
-        GameTeamPPPNorm,
-        GameTeamPPPSuper,
-        GameOppPPPNorm, GameOppPPPSuper,
-        GameTeamPosLength,
-        GameOppPosLength,
-        TimeLeftNormal,
-        TimeLeftSuper,
-        TeamPoints + 2,
-        OppPoints
-    )
+if mode == "Supershot":
+    def apply_win_probs_2_made():
+        TeamWinProb, OppWinProb = netball_win_probabilities(
+            GameTeamPPPNorm,
+            GameTeamPPPSuper,
+            GameOppPPPNorm, GameOppPPPSuper,
+            GameTeamPosLength,
+            GameOppPosLength,
+            TimeLeftNormal,
+            TimeLeftSuper,
+            TeamPoints + 2,
+            OppPoints
+        )
+        
+        TeamWin2P = TeamWinProb
+        OppWin2P = OppWinProb
+        
+        return TeamWin2P, OppWin2P
     
-    TeamWin2P = TeamWinProb
-    OppWin2P = OppWinProb
+    TeamWin2P,OppWin2P = apply_win_probs_2_made()
     
-    return TeamWin2P, OppWin2P
+    def apply_win_probs_1_made():
+        TeamWinProb,OppWinProb = netball_win_probabilities(
+            GameTeamPPPNorm,
+            GameTeamPPPSuper,
+            GameOppPPPNorm,GameOppPPPSuper,
+            GameTeamPosLength,
+            GameOppPosLength,
+            TimeLeftNormal,
+            TimeLeftSuper,
+            TeamPoints+1,
+            OppPoints
+        )
+        
+        TeamWin1P = TeamWinProb
+        OppWin1P = OppWinProb
+        
+        return TeamWin1P,OppWin1P
+    
+    TeamWin1P,OppWin1P = apply_win_probs_1_made()
+    
+    def apply_win_probs_miss():
+        TeamWinProb,OppWinProb = netball_win_probabilities(
+            GameTeamPPPNorm,
+            GameTeamPPPSuper,
+            GameOppPPPNorm,
+            GameOppPPPSuper,
+            GameTeamPosLength,
+            GameOppPosLength,
+            TimeLeftNormal,
+            TimeLeftSuper-(AvgOppTOLength+AvgTeamTOAgainstLength)/2,
+            TeamPoints,
+            OppPoints+GameOppPPPSuper
+        )
+        
+        TeamWinMiss = TeamWinProb
+        OppWinMiss = OppWinProb  
+        
+        return TeamWinMiss,OppWinMiss
+        
+    TeamWinMiss,OppWinMiss = apply_win_probs_miss()
 
-TeamWin2P,OppWin2P = apply_win_probs_2_made()
-
-def apply_win_probs_1_made():
-    TeamWinProb,OppWinProb = netball_win_probabilities(
-        GameTeamPPPNorm,
-        GameTeamPPPSuper,
-        GameOppPPPNorm,GameOppPPPSuper,
-        GameTeamPosLength,
-        GameOppPosLength,
-        TimeLeftNormal,
-        TimeLeftSuper,
-        TeamPoints+1,
-        OppPoints
-    )
-    
-    TeamWin1P = TeamWinProb
-    OppWin1P = OppWinProb
-    
-    return TeamWin1P,OppWin1P
-
-TeamWin1P,OppWin1P = apply_win_probs_1_made()
-
-def apply_win_probs_miss():
-    TeamWinProb,OppWinProb = netball_win_probabilities(
-        GameTeamPPPNorm,
-        GameTeamPPPSuper,
-        GameOppPPPNorm,
-        GameOppPPPSuper,
-        GameTeamPosLength,
-        GameOppPosLength,
-        TimeLeftNormal,
-        TimeLeftSuper-(AvgOppTOLength+AvgTeamTOAgainstLength)/2,
-        TeamPoints,
-        OppPoints+GameOppPPPSuper
-    )
-    
-    TeamWinMiss = TeamWinProb
-    OppWinMiss = OppWinProb  
-    
-    return TeamWinMiss,OppWinMiss
-    
-TeamWinMiss,OppWinMiss = apply_win_probs_miss()
-
-if mode=="Supershot":
     GS2PWin = ((GS2P*TeamWin2P)+((100-GS2P)*TeamWinMiss))
     GS1PWin = ((GS1P*TeamWin1P)+((100-GS1P)*TeamWinMiss))
     GA2PWin = ((GA2P*TeamWin2P)+((100-GA2P)*TeamWinMiss))
