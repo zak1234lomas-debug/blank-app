@@ -68,8 +68,8 @@ if team=="Custom":
 if team!="Custom":
     TeamPPPNorm = teamdf.iloc[0]['Points Per Possession (Normal Play)']
     TeamPPPSuper = teamdf.iloc[0]['Points Per Possession (Supershot Play)']
-    OppPPPNorm = oppdf.iloc[0]['Points Against Per Possession (Normal Play)']
-    OppPPPSuper = oppdf.iloc[0]['Points Against Per Possession (Supershot Play)']
+    OppPPPNorm = oppdf.iloc[0]['Points Per Possession (Normal Play)']
+    OppPPPSuper = oppdf.iloc[0]['Points Per Possession (Supershot Play)']
     
     st.write(
         ":violet[Normal Attacking Metrics:]"
